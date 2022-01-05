@@ -70,6 +70,7 @@ public class FloatingView implements IFloatingView {
     private void ensureFloatingView() {
         synchronized (this) {
             if (mEnFloatingView != null) {
+                addViewToWindow(mEnFloatingView);
                 return;
             }
             EnFloatingView enFloatingView = new EnFloatingView(EnContext.get(), mLayoutId);
@@ -199,5 +200,13 @@ public class FloatingView implements IFloatingView {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean hasFloatingView(){
+        if (mEnFloatingView != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

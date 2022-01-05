@@ -38,26 +38,16 @@ public class TestActivity extends BaseActivity {
         page_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("qwer","1234");
-                FloatingView.get().customView(testView);
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.gravity = Gravity.BOTTOM | Gravity.START;
-                params.setMargins(13, params.topMargin, params.rightMargin, dip2px(TestActivity.this,100));
-                FloatingView.get().layoutParams(params);
-                FloatingView.get().add();
-                FloatingView.get().listener(new MagnetViewListener() {
-                    @Override
-                    public void onRemove(FloatingMagnetView magnetView) {
-                        Toast.makeText(TestActivity.this, "我没了", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onClick(FloatingMagnetView magnetView) {
-                        Toast.makeText(TestActivity.this, "点到我了", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (!FloatingView.get().hasFloatingView()){
+                    FloatingView.get().customView(testView);
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params.gravity = Gravity.BOTTOM | Gravity.START;
+                    params.setMargins(13, params.topMargin, params.rightMargin, dip2px(TestActivity.this,100));
+                    FloatingView.get().layoutParams(params);
+                    FloatingView.get().add();
+                }
             }
         });
         testView = new TestView(this);

@@ -215,4 +215,13 @@ public class FloatingMagnetView extends FrameLayout {
             mPortraitY = getY();
         }
     }
+
+    public float getmOriginalRawX() {
+        return mOriginalRawX;
+    }
+
+    public float getmOriginalRawY() {
+        return mOriginalRawY;
+    }
+
 }

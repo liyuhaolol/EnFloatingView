@@ -1,57 +1,60 @@
-package com.imuxuan.en.floatingview;
+package com.imuxuan.en.floatingview.floatingview;
 
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.imuxuan.floatingview.FloatingMagnetView;
-import com.imuxuan.floatingview.MagnetViewListener;
+import com.imuxuan.en.floatingview.R;
 
-class TestView extends FloatingMagnetView {
-    private Activity activity;
+import spa.lyh.cn.lib_utils.PixelUtils;
+
+
+public class AudioFloatingView extends FloatingMagnetView {
+    private Context context;
     private View rootView;
     private RelativeLayout back,icon;
     private Handler handler;
     private MagnetViewListener listener;
     private Runnable runnable;
+    private ImageView audio_close;
 
-    public TestView(Activity context) {
+    public AudioFloatingView(Context context) {
         this(context,null);
     }
 
-    public TestView(Activity context, AttributeSet attrs) {
+    public AudioFloatingView(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public TestView(Activity context, AttributeSet attrs, int defStyleAttr) {
+    public AudioFloatingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.activity = context;
+        MARGIN_EDGE = PixelUtils.dip2px(context,15);
+        this.context = context;
         initView();
     }
 
     private void initView(){
         handler = new Handler(Looper.getMainLooper());
-        rootView = LayoutInflater.from(activity).inflate(R.layout.view_floating, this);
+        rootView = LayoutInflater.from(context).inflate(R.layout.view_floating, this);
         back = rootView.findViewById(R.id.back);
         icon = rootView.findViewById(R.id.icon);
+        audio_close = rootView.findViewById(R.id.audio_close);
         listener = new MagnetViewListener() {
             @Override
             public void onRemove(FloatingMagnetView magnetView) {
-
+                Log.e("qwer","被移除");
             }
 
             @Override
             public void onClick(FloatingMagnetView magnetView) {
-                boolean a = isTouchPointInView(icon,getmOriginalRawX(),getmOriginalRawY());
-                Log.e("qwer",""+a);
-                if (a){
+                if (isTouchPointInView(icon,getmOriginalRawX(),getmOriginalRawY())){
                     if (back.getVisibility() == GONE){
                         back.setVisibility(VISIBLE);
                         handler.removeCallbacks(runnable);
@@ -61,6 +64,8 @@ class TestView extends FloatingMagnetView {
                         back.setVisibility(GONE);
                     }
 
+                }else if (isTouchPointInView(audio_close,getmOriginalRawX(),getmOriginalRawY())){
+                    FloatingView.get().remove();
                 }
             }
         };

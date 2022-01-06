@@ -1,20 +1,21 @@
-package com.imuxuan.floatingview;
+package com.imuxuan.en.floatingview.floatingview;
 
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
-import android.support.v4.view.ViewCompat;
+
+import androidx.core.view.ViewCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.imuxuan.floatingview.utils.EnContext;
+import com.imuxuan.en.floatingview.floatingview.utils.EnContext;
 
 import java.lang.ref.WeakReference;
+
+import spa.lyh.cn.lib_utils.PixelUtils;
 
 
 /**
@@ -30,13 +31,16 @@ public class FloatingView implements IFloatingView {
     private FloatingMagnetView mEnFloatingView;
     private static volatile FloatingView mInstance;
     private WeakReference<FrameLayout> mContainer;
-    @LayoutRes
-    private int mLayoutId = R.layout.en_floating_view;
-    @DrawableRes
-    private int mIconRes = R.drawable.imuxuan;
-    private ViewGroup.LayoutParams mLayoutParams = getParams();
+
+    private ViewGroup.LayoutParams mLayoutParams;
 
     private FloatingView() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.BOTTOM | Gravity.START;
+        params.setMargins(PixelUtils.dip2px(EnContext.get(),15), params.topMargin, params.rightMargin, PixelUtils.dip2px(EnContext.get(),88));
+        layoutParams(params);
     }
 
     public static FloatingView get() {
@@ -61,6 +65,7 @@ public class FloatingView implements IFloatingView {
                 if (ViewCompat.isAttachedToWindow(mEnFloatingView) && getContainer() != null) {
                     getContainer().removeView(mEnFloatingView);
                 }
+                mEnFloatingView.onRemove();
                 mEnFloatingView = null;
             }
         });
@@ -70,14 +75,12 @@ public class FloatingView implements IFloatingView {
     private void ensureFloatingView() {
         synchronized (this) {
             if (mEnFloatingView != null) {
-                addViewToWindow(mEnFloatingView);
                 return;
             }
-            EnFloatingView enFloatingView = new EnFloatingView(EnContext.get(), mLayoutId);
-            mEnFloatingView = enFloatingView;
-            enFloatingView.setLayoutParams(mLayoutParams);
-            enFloatingView.setIconImage(mIconRes);
-            addViewToWindow(enFloatingView);
+            AudioFloatingView view = new AudioFloatingView(EnContext.get());
+            mEnFloatingView = view;
+            view.setLayoutParams(mLayoutParams);
+            addViewToWindow(view);
         }
     }
 
@@ -133,20 +136,8 @@ public class FloatingView implements IFloatingView {
     }
 
     @Override
-    public FloatingView icon(@DrawableRes int resId) {
-        mIconRes = resId;
-        return this;
-    }
-
-    @Override
     public FloatingView customView(FloatingMagnetView viewGroup) {
         mEnFloatingView = viewGroup;
-        return this;
-    }
-
-    @Override
-    public FloatingView customView(@LayoutRes int resource) {
-        mLayoutId = resource;
         return this;
     }
 
@@ -202,7 +193,7 @@ public class FloatingView implements IFloatingView {
         return null;
     }
 
-    public boolean hasFloatingView(){
+    private boolean hasFloatingView(){
         if (mEnFloatingView != null){
             return true;
         }else {

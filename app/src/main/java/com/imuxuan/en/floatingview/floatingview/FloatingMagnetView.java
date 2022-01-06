@@ -1,4 +1,4 @@
-package com.imuxuan.floatingview;
+package com.imuxuan.en.floatingview.floatingview;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.imuxuan.floatingview.utils.SystemUtils;
+import com.imuxuan.en.floatingview.floatingview.utils.SystemUtils;
 
 /**
  * @ClassName FloatingMagnetView
@@ -21,7 +21,7 @@ import com.imuxuan.floatingview.utils.SystemUtils;
  */
 public class FloatingMagnetView extends FrameLayout {
 
-    public static final int MARGIN_EDGE = 13;
+    public static int MARGIN_EDGE = 13;
     private float mOriginalRawX;
     private float mOriginalRawY;
     private float mOriginalX;

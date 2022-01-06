@@ -1,4 +1,4 @@
-package com.imuxuan.floatingview;
+package com.imuxuan.en.floatingview.floatingview;
 
 /**
  * Created by liyunpeng on 17/11/29.

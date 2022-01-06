@@ -10,7 +10,17 @@
             android:layout_width="113dp"
             android:layout_height="48dp"
             android:background="@drawable/shape_round_white"
-            android:visibility="gone"></RelativeLayout>
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/audio_close"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_audio_close"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"/>
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/icon"
             android:layout_width="48dp"

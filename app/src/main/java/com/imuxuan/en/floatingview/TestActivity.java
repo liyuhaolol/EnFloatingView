@@ -3,18 +3,13 @@ package com.imuxuan.en.floatingview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.annotation.Nullable;
 
-import com.imuxuan.floatingview.FloatingMagnetView;
-import com.imuxuan.floatingview.FloatingView;
-import com.imuxuan.floatingview.MagnetViewListener;
+import android.view.View;
+import android.widget.TextView;
+
+import com.imuxuan.en.floatingview.floatingview.FloatingView;
+import com.imuxuan.en.floatingview.floatingview.AudioFloatingView;
 
 /**
  * @ClassName TestActivity
@@ -26,7 +21,7 @@ import com.imuxuan.floatingview.MagnetViewListener;
  */
 public class TestActivity extends BaseActivity {
     static int pageNum = 1;
-    TestView testView;
+    AudioFloatingView testView;
     TextView page_num;
 
     @Override
@@ -38,22 +33,21 @@ public class TestActivity extends BaseActivity {
         page_num.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!FloatingView.get().hasFloatingView()){
-                    FloatingView.get().customView(testView);
-                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    params.gravity = Gravity.BOTTOM | Gravity.START;
-                    params.setMargins(13, params.topMargin, params.rightMargin, dip2px(TestActivity.this,100));
-                    FloatingView.get().layoutParams(params);
-                    FloatingView.get().add();
-                }
+                FloatingView.get().add();
             }
         });
-        testView = new TestView(this);
+        testView = new AudioFloatingView(this);
 
-        /*Dialog dialog = new Dialog(this);
-        dialog.show();*/
+/*        if (!FloatingView.get().hasFloatingView()){
+            FloatingView.get().customView(testView);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.BOTTOM | Gravity.START;
+            params.setMargins(13, params.topMargin, params.rightMargin, dip2px(TestActivity.this,100));
+            FloatingView.get().layoutParams(params);
+
+        }*/
     }
 
     public void createActivity(View view) {

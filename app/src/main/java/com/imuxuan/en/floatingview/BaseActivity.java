@@ -1,8 +1,9 @@
 package com.imuxuan.en.floatingview;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.imuxuan.floatingview.FloatingView;
+import com.imuxuan.en.floatingview.floatingview.FloatingView;
+
 
 /**
  * @ClassName BaseActivity
